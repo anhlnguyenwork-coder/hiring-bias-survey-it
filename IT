@@ -303,7 +303,7 @@ textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(
 
 <script>
 /* ================= CONFIG ================= */
-const SHEETS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwBQCUicwNlhIC4KUKm0aWbnpPPM8kvvqNtXbzy5ulM2VbmJ249_37Yg1byOupMRNlonQ/exec';
 const COMPLETION_URL = ''; // optional Prolific completion link
 
 const JOB = {
