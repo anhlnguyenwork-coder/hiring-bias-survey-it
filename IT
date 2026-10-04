@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DePauw Study | Writing Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#1d4ed8; --accent-soft:#eff6ff; --accent-border:#bfdbfe;
+  --bg:#f8f9fa; --surface:#fff; --surface-alt:#f3f4f6; --border:#e5e7eb;
+  --text:#111827; --text-2:#374151; --muted:#6b7280; --faint:#9ca3af;
+  --danger:#991b1b; --danger-soft:#fef2f2;
+  --success:#065f46; --success-soft:#ecfdf5;
+  --warn:#92400e; --warn-soft:#fffbeb;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+
+/* Header */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:720px;margin:0 auto;padding:18px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:700;font-size:15px;color:var(--text)}
+.logo span{color:var(--accent)}
+.topbar-right{color:var(--muted);font-size:13.5px}
+
+/* Progress */
+.wrap{max-width:720px;margin:0 auto;padding:0 0 60px}
+.progress{padding:14px 0 0}
+.progress-meta{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:8px}
+.progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--accent);transition:width .3s ease}
+
+/* Screens */
+.screen{display:none;padding-top:26px}
+.screen.active{display:block}
+.code{font-size:11px;font-weight:600;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:20px;font-weight:700;margin:0 0 8px;line-height:1.3}
+.sub{font-size:13px;color:var(--text-2);margin:0 0 20px}
+p{margin:0 0 10px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 28px;margin-bottom:18px}
+.card.grey{background:var(--surface-alt)}
+
+/* Consent */
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;margin-bottom:14px}
+.c-sec{padding:0 0 16px;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.c-sec:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.c-sec h3{font-size:14.5px;font-weight:600;margin:0 0 8px}
+.c-sec p{font-size:14px;color:var(--text-2);line-height:1.75;margin:0}
+.check-line{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--text-2);margin:6px 0 16px;cursor:pointer}
+.check-line input{width:15px;height:15px;accent-color:var(--accent);margin:0;flex-shrink:0}
+
+/* Buttons */
+button{font-family:inherit;cursor:pointer}
+.btn{font-size:14.5px;font-weight:600;border-radius:7px;padding:12px 22px;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover:not(:disabled){background:#1e40af}
+.btn-primary:disabled{background:var(--accent);opacity:.45;cursor:not-allowed}
+.btn-back{background:var(--surface);color:var(--text);border-color:#d1d5db;padding:12px 22px}
+.btn-back:hover{background:var(--surface-alt)}
+.btn-block{width:100%}
+.btn-row{display:flex;gap:10px;margin-top:20px}
+.btn-row .btn-primary{flex:1}
+button:focus-visible,summary:focus-visible,.opt:focus-visible{outline:3px solid var(--accent-border);outline-offset:2px}
+
+/* Job card */
+.job-title{font-size:16px;font-weight:600;margin:0 0 4px}
+.job-code{font-size:13.5px;color:var(--text-2);margin-bottom:12px}
+.job-line{font-size:13.5px;color:var(--text-2);line-height:1.65;margin-bottom:10px}
+.job-line strong{color:var(--text);font-weight:600}
+.skills-label{font-size:13.5px;font-weight:600;margin:4px 0 8px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:3px 10px;font-size:11.5px;color:var(--text-2)}
+.info{background:var(--accent-soft);border:1px solid var(--accent-border);color:#1e3a8a;border-radius:8px;padding:12px 16px;font-size:13.5px;margin-bottom:4px}
+
+/* Question + rules */
+.q-card{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:12px;padding:24px 28px;margin-bottom:20px}
+.q-card h3{color:var(--accent);font-size:15px;font-weight:600;margin:0 0 8px}
+.q-card .q{font-size:15px;font-weight:500;line-height:1.6;margin:0 0 12px;color:var(--text)}
+.q-card p{font-size:14px;color:var(--text-2);line-height:1.7}
+.q-card p:last-child{margin-bottom:0}
+.rules-title{font-size:14.5px;font-weight:600;margin:0 0 12px}
+.rule-block{border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin-bottom:14px;font-size:13.5px;color:var(--text-2)}
+.rule-block strong{color:var(--text);font-weight:600}
+.rule-block ul{margin:8px 0 0;padding-left:20px}
+.rule-block li{margin-bottom:5px;line-height:1.65;font-size:14px}
+.rule-block.danger{border-left-color:var(--danger);color:var(--danger);margin-bottom:0}
+.rule-block.danger strong{color:var(--danger)}
+
+/* Quiz */
+.divider{height:3px;background:var(--border);border:0;margin:6px 0 26px;border-radius:2px}
+.qz{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:16px}
+.qz-n{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.qz-t{font-size:14.5px;font-weight:500;margin-bottom:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--surface-alt);border:1px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:8px;font-size:13.5px;color:var(--text-2);font-family:inherit}
+.opt:hover{background:#eceef1}
+.opt .l{font-weight:600;color:var(--text-2);min-width:18px}
+.opt.sel{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
+.opt.sel .l{color:var(--accent)}
+.opt.right{background:var(--success-soft);border-color:#6ee7b7;color:var(--success)}
+.opt.wrong{background:var(--danger-soft);border-color:#fca5a5;color:var(--danger)}
+.quiz-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+.quiz-count{font-size:13px;color:var(--muted)}
+
+/* Result */
+.score{font-size:30px;font-weight:700;margin:4px 0 6px}
+.score.pass{color:var(--success)} .score.fail{color:var(--danger)}
+.alert{border-radius:8px;padding:12px 16px;font-size:13.5px;margin-bottom:14px}
+.alert.ok{background:var(--success-soft);color:var(--success);border:1px solid #a7f3d0}
+.alert.bad{background:var(--danger-soft);color:var(--danger);border:1px solid #fecaca}
+.alert.warn{background:var(--warn-soft);color:var(--warn);border:1px solid #fde68a}
+.rv{border-top:1px solid var(--border);padding:12px 0;font-size:13.5px;color:var(--text-2)}
+.rv:first-child{border-top:0;padding-top:0}
+.rv .rq{font-weight:600;color:var(--text);margin-bottom:4px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 8px;border-radius:99px;margin-right:6px}
+.tag.ok{background:var(--success-soft);color:var(--success)}
+.tag.no{background:var(--danger-soft);color:var(--danger)}
+
+/* Writing */
+details.rbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px}
+details.rbox summary{padding:14px 20px;font-weight:600;font-size:14px;color:var(--accent);cursor:pointer}
+details.rbox .rbox-in{padding:0 20px 20px}
+details.rbox .q-card{margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
+.stat-k{font-size:11.5px;color:var(--muted)}
+.stat-v{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat-v.good{color:var(--success)} .stat-v.warn{color:var(--warn)} .stat-v.bad{color:var(--danger)}
+textarea{width:100%;min-height:360px;resize:vertical;font-family:inherit;font-size:14.5px;line-height:1.7;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)}
+textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.paste-note{font-size:12.5px;color:var(--danger);min-height:18px;margin:6px 0 4px;font-weight:500}
+.attest{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--text-2);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer}
+.attest input{width:15px;height:15px;accent-color:var(--accent);margin:3px 0 0;flex-shrink:0}
+.submit-reason{font-size:12.5px;color:var(--muted);margin-top:8px}
+
+/* Lock overlay */
+#lockOverlay{position:fixed;inset:0;z-index:1000;background:rgba(10,14,30,0.97);display:none;align-items:center;justify-content:center;padding:24px}
+#lockOverlay.show{display:flex}
+.lock-in{max-width:440px;text-align:center;color:#fff}
+.lock-icon{font-size:48px;margin-bottom:12px}
+.lock-title{font-size:22px;font-weight:700;margin-bottom:10px}
+.lock-msg{color:#cbd5e1;font-size:14.5px;line-height:1.65;margin-bottom:24px}
+
+@media (max-width:760px){
+  .topbar-inner,.wrap{padding-left:18px;padding-right:18px}
+  .card,.q-card{padding:20px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:480px){
+  .btn-row{flex-direction:column-reverse}
+  .stats{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.progress-fill{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">DePauw<span>Study</span></div>
+    <div class="topbar-right">Writing Study</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="progress">
+    <div class="progress-meta"><span id="progLabel">Step 1 of 5</span><span id="progPct"></span></div>
+    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+  </div>
+
+  <!-- A.0 CONSENT -->
+  <section class="screen active" id="s-consent">
+    <div class="code">A.0</div>
+    <h1>Consent &amp; Study Description</h1>
+    <p class="sub">Please read carefully before continuing.</p>
+    <div class="card">
+      <span class="badge">DePauw University — Research Study</span>
+      <div class="c-sec">
+        <h3>What this is</h3>
+        <p>You are helping build materials for a research study at DePauw University on how job application writing is evaluated. We are collecting authentic, human-written responses to a common job application question.</p>
+      </div>
+      <div class="c-sec">
+        <h3>What we will do with your writing</h3>
+        <p>Your response will be used as research material. It may be lightly edited, reformatted, or paired with fictional applicant details (a made-up name, school, and work history) before being shown to study participants who will evaluate it. A de-identified copy may be posted in a public research archive when the study is published. Your identity will never be attached to your text.</p>
+      </div>
+      <div class="c-sec">
+        <h3>What we are not doing</h3>
+        <p>This is not a real job application. No employer will see this. There is no hiring decision attached to it.</p>
+      </div>
+      <div class="c-sec">
+        <h3>Time and compensation</h3>
+        <p>About 15–20 minutes. Compensation will be provided via Prolific.</p>
+      </div>
+      <div class="c-sec">
+        <h3>Your rights</h3>
+        <p>Participation is voluntary. You may stop at any point without penalty. Questions: contact the research team via Prolific.</p>
+      </div>
+    </div>
+    <label class="check-line">
+      <input type="checkbox" id="consentCheck">
+      <span>I have read the above and agree to participate in this study.</span>
+    </label>
+    <button class="btn btn-primary btn-block" id="consentNext" disabled>Continue →</button>
+  </section>
+
+  <!-- A.1 JOB POSTING -->
+  <section class="screen" id="s-job">
+    <div class="code">A.1</div>
+    <h1>The Position</h1>
+    <p class="sub">Read the posting carefully. You will answer comprehension questions about it next.</p>
+    <div class="card grey" id="jobCard"></div>
+    <div class="info">ⓘ&nbsp; Read the posting thoroughly. The next page will cover the question and rules before the quiz.</div>
+    <div class="btn-row">
+      <button class="btn btn-back" data-go="s-consent">← Back</button>
+      <button class="btn btn-primary" data-go="s-rules">I have read the posting — Continue →</button>
+    </div>
+  </section>
+
+  <!-- A.2 + A.3 RULES -->
+  <section class="screen" id="s-rules">
+    <div class="code">A.2 + A.3</div>
+    <h1>The Question &amp; Rules</h1>
+    <p class="sub">Read the question and all rules before writing your response.</p>
+    <div class="js-question"></div>
+    <div class="card js-rules"></div>
+    <div class="btn-row">
+      <button class="btn btn-back" data-go="s-job">← Back</button>
+      <button class="btn btn-primary" id="startQuizBtn">I have read the rules — Take the Quiz →</button>
+    </div>
+  </section>
+
+  <!-- A.1.5 QUIZ -->
+  <section class="screen" id="s-quiz">
+    <div class="code">A.1.5 — Quiz</div>
+    <h1>Quiz</h1>
+    <p class="sub">Answer all 10 questions based on the job posting you just read. You must score 80% or higher (8 out of 10) to continue. Use only what you read — no outside knowledge needed.</p>
+    <hr class="divider">
+    <div id="quizList"></div>
+    <div class="quiz-foot">
+      <span class="quiz-count" id="quizStatus">0 of 10 answered</span>
+      <button class="btn btn-primary" id="quizSubmit" disabled>Submit Quiz →</button>
+    </div>
+  </section>
+
+  <!-- QUIZ RESULT -->
+  <section class="screen" id="s-result">
+    <div class="code">A.1.5 — Quiz Result</div>
+    <h1 id="resultTitle">Quiz Result</h1>
+    <div id="resultHead"></div>
+    <div class="card" id="resultBreakdown"></div>
+    <div id="resultActions"></div>
+  </section>
+
+  <!-- A.4 + A.5 WRITE -->
+  <section class="screen" id="s-write">
+    <div class="code">A.4 + A.5</div>
+    <h1>Your Response</h1>
+    <p class="sub">Type directly into the box below. Pasting is disabled, and submit unlocks after 10 minutes.</p>
+    <details class="rbox">
+      <summary>View writing rules</summary>
+      <div class="rbox-in">
+        <div class="js-question"></div>
+        <div class="js-rules"></div>
+      </div>
+    </details>
+    <div class="stats">
+      <div class="stat"><div class="stat-k">Time on task</div><div class="stat-v" id="timeVal">00:00</div></div>
+      <div class="stat"><div class="stat-k" id="unlockLabel">Submit unlocks in</div><div class="stat-v warn" id="unlockVal">10:00</div></div>
+      <div class="stat"><div class="stat-k">Words (target 250–350)</div><div class="stat-v bad" id="wcVal">0</div></div>
+    </div>
+    <textarea id="essay" placeholder="Start typing your response here…" autocomplete="off" aria-label="Your response"></textarea>
+    <div class="paste-note" id="pasteNote"></div>
+    <label class="attest">
+      <input type="checkbox" id="aiCheck">
+      <span>I confirm that I wrote this response entirely myself, without AI assistance of any kind, and that I did not copy it from anywhere.</span>
+    </label>
+    <button class="btn btn-primary btn-block" id="submitBtn" disabled style="margin-top:16px">Submit Response →</button>
+    <div class="submit-reason" id="submitReason"></div>
+  </section>
+
+  <!-- DONE -->
+  <section class="screen" id="s-done">
+    <div class="code">Complete</div>
+    <h1>Response Submitted</h1>
+    <p class="sub">Thank you. Your response has been recorded.</p>
+    <div id="doneExtra"></div>
+  </section>
+</div>
+
+<!-- LOCK OVERLAY -->
+<div id="lockOverlay" role="alertdialog" aria-modal="true" aria-labelledby="lockTitle">
+  <div class="lock-in">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title" id="lockTitle">Please stay in this window</div>
+    <div class="lock-msg">This task is monitored. Leaving this window, switching tabs, or exiting full screen is recorded and may affect whether your response is accepted.</div>
+    <button class="btn btn-primary" id="lockReturn">Return to Task →</button>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const SHEETS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+const COMPLETION_URL = ''; // optional Prolific completion link
+
+const JOB = {
+  title: 'Information Security Analyst',
+  code: 'O*NET-SOC 15-1212.00',
+  summary: 'Plan, implement, upgrade, or monitor security measures for the protection of computer networks and information. Assess system vulnerabilities for security risks and propose and implement risk mitigation strategies. May ensure appropriate security controls are in place that will safeguard digital files and vital electronic infrastructure. May respond to computer security breaches and viruses.',
+  titles: 'IT Security Analyst, Cybersecurity Analyst, Information Security Specialist, Network Security Analyst, Information Systems Security Analyst, Data Security Administrator, Information Technology Specialist.',
+  level: "Entry-level. Open to candidates with 0–2 years of professional experience. Bachelor's degree required; IT or security-specific experience preferred but not required.",
+  skills: ['Critical Thinking', 'Complex Problem Solving', 'Monitoring', 'Systems Analysis', 'Systems Evaluation', 'Reading Comprehension', 'Active Listening', 'Judgment & Decision Making', 'Writing', 'Speaking']
+};
+
+const QUESTION_HTML = `
+  <div class="q-card">
+    <h3>The Question</h3>
+    <div class="q">"Explain why you are a good fit for this position based on your early-career experience in IT."</div>
+    <p>Answer as if you were applying to the Information Security Analyst position above, as an early-career candidate — a current senior, recent graduate, or someone in their first year or two of work.</p>
+    <p><strong>Write about your own real experiences from your time in college and your first two years of employment.</strong> Jobs, internships, campus roles, volunteer work, group projects, athletics, part-time work — anything where you built a skill this role calls for. Do not invent accomplishments.</p>
+  </div>`;
+
+const RULES_HTML = `
+  <div class="rules-title">Rules — read all of these</div>
+  <div class="rule-block"><strong>Length:</strong> 250–350 words. The box will not accept fewer than 225 or more than 400.</div>
+  <div class="rule-block">
+    <strong>Format rules:</strong>
+    <ul>
+      <li>Continuous prose only — no bullet points, no headings, no numbered lists</li>
+      <li>No greeting and no sign-off — do not write "Dear Hiring Manager" or "Sincerely." Start with your first sentence of substance</li>
+      <li>Be specific — include at least two concrete examples with real detail: what the situation was, what you did, what happened. Where you can, put a number on it</li>
+      <li>Write it once, the way you'd actually send it — we want your natural writing voice</li>
+    </ul>
+  </div>
+  <div class="rule-block danger"><strong>No AI tools — this is required.</strong> Your response must be written entirely by you, without AI assistance of any kind. Please type directly into the box — do not paste.</div>`;
+
+/* First choice listed is correct. Questions and choices are shuffled on load.
+   Q1–Q8: reading comprehension of the posting. Q9–Q10: how a junior candidate should write for this role. */
+const QUIZ = [
+  { q: 'What is the main job of an Information Security Analyst based on the posting?',
+    c: ['Planning, implementing, and monitoring security measures that protect computer networks and information', 'Building websites and mobile apps for customers', 'Selling security software to other companies', 'Repairing laptops and printers for employees'] },
+  { q: 'Is this position entry-level or senior-level?',
+    c: ['Entry-level, open to candidates with 0–2 years', 'Mid-level, requiring 5–8 years', 'Senior-level, requiring 10+ years', 'Executive-level only'] },
+  { q: 'Does this job require a college degree?',
+    c: ["Yes, a bachelor's degree is required", "A master's degree is required", 'Only a professional certification is needed', 'No degree or certification is needed'] },
+  { q: 'According to the posting, is IT or security-specific experience required?',
+    c: ['It is preferred but not required', 'Yes, at least 3 years is required', 'Yes, a security clearance is required', 'The posting does not mention experience at all'] },
+  { q: 'After assessing system vulnerabilities, what does the posting say the analyst should do?',
+    c: ['Propose and implement risk mitigation strategies', 'Report the issue to the police', 'Replace all company computers', 'Shut down the network until further notice'] },
+  { q: 'According to the posting, what may this role respond to?',
+    c: ['Computer security breaches and viruses', 'Customer billing complaints', 'Office building maintenance requests', 'Media and press inquiries'] },
+  { q: 'Which of these is listed as a common title for this job?',
+    c: ['Network Security Analyst', 'Data Scientist', 'Web Designer', 'Software Sales Representative'] },
+  { q: 'Which of these is one of the skills emphasized in the posting?',
+    c: ['Systems Evaluation', 'Programming', 'Sales & Marketing', 'Equipment Repair'] },
+  { q: 'You are an early-career candidate. Which approach to your response follows the question and rules?',
+    c: ['Describe real experiences from college or early work, such as a campus IT job or a class security project, with what you did and what happened', 'Invent a few impressive accomplishments so you sound more experienced', 'List your technical skills as bullet points so they are easy to scan', 'Write in general terms about why cybersecurity matters to society'] },
+  { q: 'Which opening sentence best follows the rules for this response?',
+    c: ['Working at my college\'s IT help desk for two years, I handled over 300 tickets, including several phishing reports I traced and escalated.', 'Dear Hiring Manager, I am writing to apply for the Information Security Analyst position.', 'Skills: network monitoring, firewalls, Python, incident response.', 'I have spent the last decade leading security teams at major corporations.'] }
+];
+
+/* ================= STATE ================= */
+const params = new URLSearchParams(location.search);
+const PID = params.get('PROLIFIC_PID') || '';
+const STUDY_ID = params.get('STUDY_ID') || '';
+const SESSION_ID = params.get('SESSION_ID') || '';
+
+let lockActive = false;
+let phase = 'pre';
+let quizItems = [];
+let quizAttempts = 0;
+let lockStartedAt = null;
+let writeStart = null;
+let timerId = null;
+let pasteCount = 0;
+let focusSwitches = 0;
+let tabSwitches = 0;
+let quizFocusSwitches = 0;
+let speedFlagged = false;
+let maxCharsPerSec = 0;
+let lastLen = 0;
+let inputHistory = [];
+let lastLeaveAt = 0;
+let submitting = false;
+const eventLog = [];
+
+const MIN_SECONDS = 600;
+const WC_TARGET_MIN = 250, WC_TARGET_MAX = 350, WC_HARD_MIN = 225, WC_HARD_MAX = 400;
+const SPEED_LIMIT = 300;
+const LETTERS = ['A', 'B', 'C', 'D'];
+
+const $ = id => document.getElementById(id);
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function logEvent(type, detail) {
+  eventLog.push({
+    t: new Date().toISOString(),
+    s: lockStartedAt ? Math.round((Date.now() - lockStartedAt) / 100) / 10 : 0,
+    phase, e: type, d: detail === undefined ? '' : detail
+  });
+}
+
+/* ================= STATIC CONTENT ================= */
+$('jobCard').innerHTML = `
+  <div class="job-title">${esc(JOB.title)}</div>
+  <div class="job-code">${esc(JOB.code)}</div>
+  <div class="job-line"><strong>Position summary:</strong> ${esc(JOB.summary)}</div>
+  <div class="job-line"><strong>Common titles:</strong> ${esc(JOB.titles)}</div>
+  <div class="job-line"><strong>Level:</strong> ${esc(JOB.level)}</div>
+  <div class="skills-label">Skills emphasized:</div>
+  <div class="pills">${JOB.skills.map(s => `<span class="pill">${esc(s)}</span>`).join('')}</div>`;
+
+document.querySelectorAll('.js-question').forEach(el => el.innerHTML = QUESTION_HTML);
+document.querySelectorAll('.js-rules').forEach(el => el.innerHTML = RULES_HTML);
+
+/* ================= NAV + PROGRESS ================= */
+const STEPS = {
+  's-consent': [1, ''], 's-job': [2, 'Job Posting'], 's-rules': [3, 'Rules'],
+  's-quiz': [4, 'Quiz'], 's-result': [4, 'Quiz'], 's-write': [5, 'Your Response'], 's-done': [5, 'Complete']
+};
+const TOTAL = 5;
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  const [step, label] = STEPS[id];
+  const pct = id === 's-done' ? 100 : (step - 1) * (100 / TOTAL);
+  $('progLabel').textContent = `Step ${step} of ${TOTAL}` + (label ? ` — ${label}` : '');
+  $('progPct').textContent = pct ? Math.round(pct) + '%' : '';
+  $('progFill').style.width = pct + '%';
+  window.scrollTo(0, 0);
+  logEvent('screen', id);
+}
+
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => show(b.dataset.go)));
+$('consentCheck').addEventListener('change', e => { $('consentNext').disabled = !e.target.checked; });
+$('consentNext').addEventListener('click', () => { if ($('consentCheck').checked) show('s-job'); });
+$('startQuizBtn').addEventListener('click', startQuizLocked);
+
+/* ================= LOCK MODE ================= */
+function requestFs() {
+  const el = document.documentElement;
+  if (!document.fullscreenElement && el.requestFullscreen) {
+    el.requestFullscreen().catch(err => logEvent('fullscreen_denied', String(err && err.message || err)));
+  }
+}
+
+function showLock(reason) {
+  if (!lockActive) return;
+  logEvent('lock_trigger', reason);
+  if (['visibility_hidden', 'window_blur', 'fullscreen_exit'].includes(reason)) {
+    const now = Date.now();
+    if (now - lastLeaveAt > 1000) {
+      if (phase === 'write') focusSwitches++;
+      else if (phase === 'quiz') quizFocusSwitches++;
+    }
+    lastLeaveAt = now;
+    if (reason === 'visibility_hidden' && phase === 'write') tabSwitches++;
+  }
+  $('lockOverlay').classList.add('show');
+}
+function hideLock() { $('lockOverlay').classList.remove('show'); }
+
+$('lockReturn').addEventListener('click', () => {
+  logEvent('lock_return');
+  hideLock();
+  requestFs();
+  if (phase === 'write') $('essay').focus();
+});
+
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') showLock('visibility_hidden'); });
+window.addEventListener('blur', () => showLock('window_blur'));
+window.addEventListener('focus', () => showLock('window_focus'));
+window.addEventListener('pageshow', () => showLock('pageshow'));
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) showLock('fullscreen_exit');
+  else logEvent('fullscreen_enter');
+});
+window.addEventListener('beforeunload', e => { if (lockActive) { e.preventDefault(); e.returnValue = ''; } });
+
+function startQuizLocked() {
+  lockActive = true;
+  if (!lockStartedAt) lockStartedAt = Date.now();
+  phase = 'quiz';
+  quizAttempts++;
+  logEvent('quiz_start', 'attempt ' + quizAttempts);
+  requestFs();
+  buildQuiz();
+  show('s-quiz');
+}
+
+/* ================= QUIZ ================= */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function buildQuiz() {
+  quizItems = shuffle(QUIZ).map(it => ({ q: it.q, correct: it.c[0], opts: shuffle(it.c), chosen: null }));
+  $('quizList').innerHTML = quizItems.map((it, i) => `
+    <div class="qz">
+      <div class="qz-n">Question ${i + 1} of ${quizItems.length}</div>
+      <div class="qz-t">${esc(it.q)}</div>
+      ${it.opts.map((o, j) => `<button type="button" class="opt" data-q="${i}" data-o="${j}"><span class="l">${LETTERS[j]}.</span><span>${esc(o)}</span></button>`).join('')}
+    </div>`).join('');
+  $('quizList').querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+    const qi = +b.dataset.q, oi = +b.dataset.o;
+    quizItems[qi].chosen = quizItems[qi].opts[oi];
+    document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(x => x.classList.toggle('sel', x === b));
+    updateQuizStatus();
+  }));
+  updateQuizStatus();
+}
+
+function updateQuizStatus() {
+  const n = quizItems.filter(q => q.chosen !== null).length;
+  $('quizStatus').textContent = `${n} of ${quizItems.length} answered`;
+  $('quizSubmit').disabled = n < quizItems.length;
+}
+
+$('quizSubmit').addEventListener('click', () => {
+  if (quizItems.some(q => q.chosen === null)) return;
+  const score = quizItems.filter(q => q.chosen === q.correct).length;
+  const pct = Math.round(score / quizItems.length * 100);
+  const passed = pct >= 80;
+  logEvent('quiz_submit', { attempt: quizAttempts, score, passed });
+
+  $('resultBreakdown').innerHTML = quizItems.map((q, i) => {
+    const ok = q.chosen === q.correct;
+    return `<div class="rv">
+      <div class="rq">${i + 1}. ${esc(q.q)}</div>
+      <div><span class="tag ${ok ? 'ok' : 'no'}">${ok ? 'Correct' : 'Incorrect'}</span>Your answer: ${esc(q.chosen)}</div>
+      ${ok ? '' : `<div style="margin-top:4px">Correct answer: <strong>${esc(q.correct)}</strong></div>`}
+    </div>`;
+  }).join('');
+
+  if (passed) {
+    $('resultTitle').textContent = 'You passed the quiz';
+    $('resultHead').innerHTML = `<div class="score pass">${score} / ${quizItems.length} (${pct}%)</div>
+      <div class="alert ok">You scored 80% or higher. Review your answers below, then continue to the writing task. The 10-minute timer starts when the next page opens.</div>`;
+    $('resultActions').innerHTML = `<button class="btn btn-primary btn-block" id="toWrite">Continue to Writing →</button>`;
+    $('toWrite').addEventListener('click', startWriting);
+  } else {
+    $('resultTitle').textContent = 'You did not pass the quiz';
+    $('resultHead').innerHTML = `<div class="score fail">${score} / ${quizItems.length} (${pct}%)</div>
+      <div class="alert bad">You need 8 out of 10 to continue. The correct answers are shown below. You will restart from the beginning; read the posting and rules again before retaking the quiz.</div>`;
+    $('resultActions').innerHTML = `<button class="btn btn-primary btn-block" id="restart">Restart from the Beginning →</button>`;
+    $('restart').addEventListener('click', () => {
+      phase = 'pre';
+      $('consentCheck').checked = false;
+      $('consentNext').disabled = true;
+      logEvent('quiz_restart');
+      show('s-consent');
+    });
+  }
+  show('s-result');
+});
+
+/* ================= WRITING ================= */
+function fmt(sec) { sec = Math.max(0, Math.floor(sec)); return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }
+function wordCount(t) { return t.trim() ? t.trim().split(/\s+/).length : 0; }
+function elapsed() { return writeStart ? (Date.now() - writeStart) / 1000 : 0; }
+
+function startWriting() {
+  phase = 'write';
+  writeStart = Date.now();
+  logEvent('write_start');
+  show('s-write');
+  $('essay').focus();
+  timerId = setInterval(tick, 1000);
+  tick();
+}
+
+function tick() {
+  const e = elapsed();
+  $('timeVal').textContent = fmt(e);
+  const left = MIN_SECONDS - e;
+  if (left > 0) {
+    $('unlockLabel').textContent = 'Submit unlocks in';
+    $('unlockVal').textContent = fmt(left);
+    $('unlockVal').className = 'stat-v warn';
+  } else {
+    $('unlockLabel').textContent = 'Minimum time';
+    $('unlockVal').textContent = 'Reached';
+    $('unlockVal').className = 'stat-v good';
+  }
+  updateSubmitState();
+}
+
+function updateSubmitState() {
+  const wc = wordCount($('essay').value);
+  const wcEl = $('wcVal');
+  wcEl.textContent = wc;
+  wcEl.className = 'stat-v ' + ((wc >= WC_TARGET_MIN && wc <= WC_TARGET_MAX) ? 'good' : (wc >= WC_HARD_MIN && wc <= WC_HARD_MAX) ? 'warn' : 'bad');
+
+  const reasons = [];
+  const left = MIN_SECONDS - elapsed();
+  if (left > 0) reasons.push(`wait ${fmt(left)} more`);
+  if (wc < WC_HARD_MIN) reasons.push(`write at least ${WC_HARD_MIN} words (aim for ${WC_TARGET_MIN}–${WC_TARGET_MAX})`);
+  if (wc > WC_HARD_MAX) reasons.push(`cut to ${WC_HARD_MAX} words or fewer (aim for ${WC_TARGET_MIN}–${WC_TARGET_MAX})`);
+  if (!$('aiCheck').checked) reasons.push('check the confirmation box');
+
+  $('submitBtn').disabled = reasons.length > 0 || submitting;
+  let msg = reasons.length ? 'To submit: ' + reasons.join(', ') + '.' : '';
+  if (!reasons.length && (wc < WC_TARGET_MIN || wc > WC_TARGET_MAX)) msg = `You can submit, but the target is ${WC_TARGET_MIN}–${WC_TARGET_MAX} words.`;
+  $('submitReason').textContent = msg;
+}
+
+const essay = $('essay');
+function blockPaste(e, how) {
+  e.preventDefault();
+  pasteCount++;
+  logEvent('paste_blocked', how);
+  $('pasteNote').textContent = `Pasting is disabled. This attempt was recorded (${pasteCount} so far).`;
+}
+essay.addEventListener('paste', e => blockPaste(e, 'paste'));
+essay.addEventListener('drop', e => blockPaste(e, 'drop'));
+essay.addEventListener('dragover', e => e.preventDefault());
+essay.addEventListener('beforeinput', e => {
+  if (['insertFromPaste', 'insertFromDrop', 'insertFromPasteAsQuotation'].includes(e.inputType)) blockPaste(e, e.inputType);
+});
+
+essay.addEventListener('input', () => {
+  const now = Date.now();
+  const len = essay.value.length;
+  const added = len - lastLen;
+  lastLen = len;
+  if (added > 0) {
+    inputHistory.push({ t: now, added });
+    inputHistory = inputHistory.filter(h => now - h.t <= 1000);
+    const perSec = inputHistory.reduce((s, h) => s + h.added, 0);
+    if (perSec > maxCharsPerSec) maxCharsPerSec = perSec;
+    if (perSec > SPEED_LIMIT && !speedFlagged) { speedFlagged = true; logEvent('speed_flag', perSec + ' chars/sec'); }
+    if (added > 50) logEvent('large_insert', added + ' chars');
+  }
+  updateSubmitState();
+});
+$('aiCheck').addEventListener('change', e => { logEvent('ai_attestation', e.target.checked); updateSubmitState(); });
+
+function integrityScore() {
+  let s = 100;
+  s -= Math.min(pasteCount * 10, 30);
+  s -= Math.min(focusSwitches * 5, 40);
+  if (speedFlagged) s -= 30;
+  return Math.max(0, Math.min(100, s));
+}
+function integrityLabel(s) { return s >= 80 ? 'CLEAN' : s >= 50 ? 'SUSPICIOUS' : 'FLAGGED'; }
+
+$('submitBtn').addEventListener('click', async () => {
+  if ($('submitBtn').disabled || submitting) return;
+  submitting = true;
+  $('submitBtn').disabled = true;
+  $('submitBtn').textContent = 'Submitting…';
+  const text = essay.value;
+  const secs = Math.round(elapsed());
+  const score = integrityScore();
+  logEvent('submit');
+  const payload = {
+    type: 'writing_task',
+    submitted_at: new Date().toISOString(),
+    prolific_pid: PID,
+    study_id: STUDY_ID,
+    session_id: SESSION_ID,
+    job_title: JOB.title,
+    onet_code: '15-1212.00',
+    word_count: wordCount(text),
+    time_seconds: secs,
+    time_minutes: Math.round((secs / 60) * 100) / 100,
+    paste_count: pasteCount,
+    focus_switches: focusSwitches,
+    tab_switches: tabSwitches,
+    quiz_focus_switches: quizFocusSwitches,
+    quiz_attempts: quizAttempts,
+    speed_flagged: speedFlagged,
+    max_chars_per_sec: maxCharsPerSec,
+    integrity_score: score,
+    integrity_label: integrityLabel(score),
+    ai_attestation: $('aiCheck').checked,
+    cover_letter_text: text,
+    event_log_json: JSON.stringify(eventLog)
+  };
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    clearInterval(timerId);
+    phase = 'done';
+    lockActive = false;
+    hideLock();
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    if (COMPLETION_URL) {
+      $('doneExtra').innerHTML = `<button class="btn btn-primary btn-block" id="toProlific">Return to Prolific →</button>`;
+      $('toProlific').addEventListener('click', () => { location.href = COMPLETION_URL; });
+    } else {
+      $('doneExtra').innerHTML = '<div class="info">You can now close this window.</div>';
+    }
+    show('s-done');
+  } catch (err) {
+    submitting = false;
+    $('submitBtn').textContent = 'Submit Response →';
+    updateSubmitState();
+    $('submitReason').textContent = 'Your response could not be sent. Check your connection and click Submit again. Your text is still here.';
+    logEvent('submit_error', String(err && err.message || err));
+  }
+});
+
+show('s-consent');
+</script>
+</body>
+</html>
