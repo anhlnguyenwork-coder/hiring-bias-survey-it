@@ -364,7 +364,7 @@ const QUIZ = [
 
 /* ================= STATE ================= */
 const params = new URLSearchParams(location.search);
-const PID = params.get('PROLIFIC_PID') || '';
+const PID = params.get('PROLIFIC_PID') || 'test';
 const STUDY_ID = params.get('STUDY_ID') || '';
 const SESSION_ID = params.get('SESSION_ID') || '';
 
@@ -680,8 +680,8 @@ $('submitBtn').addEventListener('click', async () => {
     integrity_score: score,
     integrity_label: integrityLabel(score),
     ai_attestation: $('aiCheck').checked,
-    cover_letter_text: text,
-    event_log_json: JSON.stringify(eventLog)
+    text: text,
+    events: eventLog.map(ev => ({ type: String(ev.e).toUpperCase(), ts: Date.parse(ev.t), elapsed: Math.round(ev.s), phase: ev.phase, detail: ev.d }))
   };
   try {
     await fetch(SHEETS_URL, {
